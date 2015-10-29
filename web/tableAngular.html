@@ -10,8 +10,48 @@
   </head>
   <body>
     <div>
-      <div>Add Your Table made with Angular here</div>
+      <div ng-app="app">
+          <table class="table" ng-controller="MemberController as ctrl">
+              <thead>
+                  <tr>
+                      <td>Id</td>
+                      <td>Name</td>
+                      <td>Email</td>
+                      <td>Age</td>
+                      <td>Eye Color</td>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="member in members">
+                      <td>{{member.id}}</td>
+                      <td>{{member.name}}</td>
+                      <td>{{member.email}}</td>
+                      <td>{{member.age}}</td>
+                      <td>{{member.eyeColor}}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
       <a href='index.html'>Back</a>
     </div>
+      
+      <script>
+          angular.module('app', [])
+                .factory('MemberFactory', function($http){
+                    return{
+                        getMembers:function(){
+                            return $http.get("api/member");
+                        }
+                    }
+                })
+              .controller('MemberController', function($scope, MemberFactory){
+                  $scope.members = {};
+
+                  members = MemberFactory.getMembers().then(function(data){
+                        console.log(data.data);
+                        $scope.members = data.data;
+                  })
+              });
+      </script>
   </body>
 </html>
