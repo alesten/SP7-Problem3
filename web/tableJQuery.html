@@ -1,18 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>TODO supply a title</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  </head>
-  <body>
-      <div>
-          <table>
-              
-          </table>
-      </div>
-     <a href='index.html'>Back</a>
-  </body>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Id</td>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Age</td>
+                        <td>Eye Color</td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <a href='index.html'>Back</a>
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: "api/member",
+                    type: 'GET',
+                    success: function (data, textStatus, jqXHR) {
+                        var str = "";
+
+                        for (var i = 0; i < data.length; i++) {
+                            var member = data[i];
+
+                            str += "<tr>";
+                            str += "<td>" + member.id + "</td>";
+                            str += "<td>" + member.name + "</td>";
+                            str += "<td>" + member.email + "</td>";
+                            str += "<td>" + member.age + "</td>";
+                            str += "<td>" + member.eyeColor + "</td>";
+                            str += "</tr>";
+                        }
+
+                        $(".table tbody").html(str);
+                    }
+                });
+            });
+        </script>
+    </body>
 </html>
